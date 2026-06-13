@@ -114,7 +114,8 @@
   .projects-wrap{position:relative}
   .proj{position:sticky;top:90px;background:var(--card);border:1px solid var(--line);border-radius:22px;
     padding:38px;margin-bottom:26px;transition:.3s;overflow:hidden}
-  .proj::after{content:'';position:absolute;inset:0;background:radial-gradient(500px circle at var(--mx,50%) var(--my,0),rgba(217,70,239,.10),transparent 42%);opacity:0;transition:.3s}
+  .proj::after{content:'';position:absolute;inset:0;background:radial-gradient(500px circle at var(--mx,50%) var(--my,0),rgba(217,70,239,.10),transparent 42%);opacity:0;transition:.3s;pointer-events:none}
+  .proj>*{position:relative;z-index:1}
   .proj:hover::after{opacity:1}
   .proj:hover{border-color:#3a2a44}
   .proj .pno{font-family:'JetBrains Mono',monospace;color:var(--accent-solid);font-size:.85rem}
