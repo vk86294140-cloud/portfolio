@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Vamsi Krishna Unnam — ML / AI Systems Engineer</title>
+<meta name="description" content="Vamsi Krishna Unnam — Software Engineer specializing in machine learning systems, LLM/agentic AI, and cloud-native MLOps. 3+ years across financial services and autonomous vehicles." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#070b14; --bg2:#0c1322; --card:#101a2e; --line:#1d2c47;
+    --txt:#e7eef9; --muted:#8da0c0;
+    --accent:#38e1c4; --accent2:#6c8cff; --accent3:#b069ff;
+    --glow:0 0 40px rgba(56,225,196,.25);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg); color:var(--txt);
+    font-family:'Sora',system-ui,sans-serif; line-height:1.6;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none}
+  code,.mono{font-family:'JetBrains Mono',monospace}
+  ::selection{background:var(--accent);color:#04121b}
+
+  #bg-canvas{position:fixed;inset:0;z-index:-2}
+  .grain{position:fixed;inset:0;z-index:-1;opacity:.04;pointer-events:none;
+    background-image:radial-gradient(#fff 1px,transparent 1px);background-size:3px 3px}
+
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;justify-content:space-between;
+    align-items:center;padding:18px 6vw;backdrop-filter:blur(10px);
+    background:rgba(7,11,20,.55);border-bottom:1px solid transparent;transition:.3s}
+  nav.scrolled{border-bottom:1px solid var(--line);background:rgba(7,11,20,.85)}
+  .logo{font-weight:800;letter-spacing:.5px}
+  .logo span{color:var(--accent)}
+  .nav-links{display:flex;gap:28px;font-size:.92rem}
+  .nav-links a{color:var(--muted);transition:.2s}
+  .nav-links a:hover{color:var(--accent)}
+  .burger{display:none;font-size:1.5rem;cursor:pointer}
+
+  section{padding:110px 6vw;position:relative}
+  .label{color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:.85rem;
+    letter-spacing:2px;text-transform:uppercase;margin-bottom:14px}
+  h2.title{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;margin-bottom:40px;line-height:1.1}
+
+  /* HERO */
+  .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding-top:90px}
+  .hero .hi{color:var(--accent);font-family:'JetBrains Mono',monospace;margin-bottom:18px;opacity:0;animation:fade .8s .2s forwards}
+  .hero h1{font-size:clamp(2.6rem,8vw,5.5rem);font-weight:800;line-height:1.02;letter-spacing:-1px;
+    opacity:0;animation:fade .8s .35s forwards}
+  .hero h1 .grad{background:linear-gradient(120deg,var(--accent),var(--accent2),var(--accent3));
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .hero .role{font-size:clamp(1.1rem,3vw,1.9rem);color:var(--muted);margin-top:18px;min-height:1.6em;
+    font-family:'JetBrains Mono',monospace;opacity:0;animation:fade .8s .5s forwards}
+  .hero .role .cursor{color:var(--accent);animation:blink 1s steps(1) infinite}
+  .hero p.lede{max-width:640px;color:var(--muted);margin-top:24px;font-size:1.05rem;
+    opacity:0;animation:fade .8s .65s forwards}
+  .cta{display:flex;gap:16px;margin-top:38px;flex-wrap:wrap;opacity:0;animation:fade .8s .8s forwards}
+  .btn{padding:13px 26px;border-radius:12px;font-weight:600;font-size:.95rem;transition:.25s;cursor:pointer;border:1px solid var(--line)}
+  .btn.primary{background:linear-gradient(120deg,var(--accent),var(--accent2));color:#04121b;border:none}
+  .btn.primary:hover{transform:translateY(-3px);box-shadow:var(--glow)}
+  .btn.ghost:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-3px)}
+  .scroll-ind{position:absolute;bottom:34px;left:50%;transform:translateX(-50%);color:var(--muted);
+    font-size:.8rem;font-family:'JetBrains Mono',monospace;opacity:0;animation:fade 1s 1.4s forwards}
+  .scroll-ind .mouse{width:24px;height:38px;border:2px solid var(--muted);border-radius:14px;margin:8px auto 0;position:relative}
+  .scroll-ind .mouse::after{content:'';width:4px;height:7px;background:var(--accent);border-radius:2px;
+    position:absolute;left:50%;top:7px;transform:translateX(-50%);animation:wheel 1.5s infinite}
+
+  /* STATS */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:70px;
+    opacity:0;animation:fade .8s 1s forwards}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;text-align:center}
+  .stat .num{font-size:2.2rem;font-weight:800;color:var(--accent)}
+  .stat .lbl{color:var(--muted);font-size:.85rem;margin-top:4px}
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(34px);transition:.7s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  /* ABOUT */
+  .about-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:50px;align-items:start}
+  .about-grid p{color:var(--muted);margin-bottom:16px}
+  .about-grid b{color:var(--txt)}
+  .now-card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:28px}
+  .now-card h4{font-size:.8rem;letter-spacing:1px;color:var(--accent);margin-bottom:16px;font-family:'JetBrains Mono',monospace}
+  .now-row{display:flex;gap:12px;margin-bottom:14px;font-size:.95rem}
+  .now-row .k{color:var(--muted);min-width:90px}
+
+  /* SKILLS */
+  .skills-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+  .skill-cat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;transition:.3s}
+  .skill-cat:hover{border-color:var(--accent2);transform:translateY(-4px)}
+  .skill-cat h4{margin-bottom:16px;font-size:1.05rem}
+  .chips{display:flex;flex-wrap:wrap;gap:9px}
+  .chip{background:#0a1426;border:1px solid var(--line);border-radius:8px;padding:6px 12px;
+    font-size:.82rem;font-family:'JetBrains Mono',monospace;color:var(--muted);transition:.2s}
+  .skill-cat:hover .chip{border-color:#27406a}
+  .chip:hover{color:var(--accent);border-color:var(--accent)}
+
+  /* TIMELINE */
+  .timeline{position:relative;padding-left:34px}
+  .timeline::before{content:'';position:absolute;left:7px;top:6px;bottom:6px;width:2px;
+    background:linear-gradient(var(--accent),var(--accent3))}
+  .tl-item{position:relative;margin-bottom:42px}
+  .tl-item::before{content:'';position:absolute;left:-34px;top:5px;width:16px;height:16px;border-radius:50%;
+    background:var(--bg);border:3px solid var(--accent);box-shadow:var(--glow)}
+  .tl-item .when{font-family:'JetBrains Mono',monospace;color:var(--accent);font-size:.82rem}
+  .tl-item h4{font-size:1.25rem;margin:4px 0}
+  .tl-item .co{color:var(--accent2);font-weight:600;margin-bottom:10px}
+  .tl-item ul{list-style:none;color:var(--muted);font-size:.95rem}
+  .tl-item li{padding-left:18px;position:relative;margin-bottom:7px}
+  .tl-item li::before{content:'▹';position:absolute;left:0;color:var(--accent)}
+
+  /* PROJECTS */
+  .proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .proj{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:26px;
+    display:flex;flex-direction:column;transition:.3s;position:relative;overflow:hidden}
+  .proj::after{content:'';position:absolute;inset:0;background:radial-gradient(400px circle at var(--mx,50%) var(--my,0%),rgba(56,225,196,.10),transparent 40%);opacity:0;transition:.3s}
+  .proj:hover{transform:translateY(-6px);border-color:var(--accent)}
+  .proj:hover::after{opacity:1}
+  .proj .ph{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+  .proj .pico{font-size:1.6rem}
+  .proj h4{font-size:1.12rem;margin-bottom:8px}
+  .proj p{color:var(--muted);font-size:.9rem;flex:1}
+  .proj .ptags{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
+  .proj .ptags span{font-size:.72rem;font-family:'JetBrains Mono',monospace;color:var(--accent2);
+    background:#0a1426;padding:4px 9px;border-radius:6px}
+  .proj .plink{margin-top:16px;font-size:.85rem;color:var(--accent);font-family:'JetBrains Mono',monospace}
+
+  /* CONTACT */
+  .contact{text-align:center}
+  .contact h2{font-size:clamp(2rem,6vw,3.6rem);font-weight:800;margin-bottom:20px}
+  .contact p{color:var(--muted);max-width:520px;margin:0 auto 36px}
+  .clinks{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+  footer{text-align:center;padding:40px;color:var(--muted);font-size:.82rem;border-top:1px solid var(--line)}
+
+  @keyframes fade{to{opacity:1}}
+  @keyframes blink{50%{opacity:0}}
+  @keyframes wheel{0%{top:7px;opacity:1}100%{top:20px;opacity:0}}
+
+  @media(max-width:860px){
+    .nav-links{display:none}.burger{display:block}
+    .about-grid,.skills-grid,.proj-grid{grid-template-columns:1fr}
+    .stats{grid-template-columns:repeat(2,1fr)}
+  }
+</style>
+</head>
+<body>
+<canvas id="bg-canvas"></canvas>
+<div class="grain"></div>
+
+<nav id="nav">
+  <div class="logo">VK<span>U</span></div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#experience">Experience</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div class="burger" onclick="document.querySelector('.nav-links').style.display='flex';this.style.display='none'">☰</div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hi">Hi, my name is</div>
+  <h1>Vamsi Krishna <span class="grad">Unnam.</span></h1>
+  <div class="role" id="role"><span id="role-txt"></span><span class="cursor">_</span></div>
+  <p class="lede">I build machine-learning systems, LLM &amp; agentic-AI pipelines, and cloud-native backends —
+    end to end, from data to deployment. 3+ years across financial services and autonomous vehicles.</p>
+  <div class="cta">
+    <a class="btn primary" href="#projects">View my work</a>
+    <a class="btn ghost" href="mailto:vk86294140@gmail.com">Get in touch</a>
+    <a class="btn ghost" id="resume-btn" href="#" download>Download résumé</a>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="num" data-to="3">0</div><div class="lbl">Years experience</div></div>
+    <div class="stat"><div class="num" data-to="6">0</div><div class="lbl">Open-source projects</div></div>
+    <div class="stat"><div class="num" data-to="2">0</div><div class="lbl">Industries shipped in</div></div>
+    <div class="stat"><div class="num" data-suffix="%" data-to="70">0</div><div class="lbl">Token cost cut (PromptPress)</div></div>
+  </div>
+  <div class="scroll-ind">scroll<div class="mouse"></div></div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="reveal"><div class="label">01 · About</div>
+  <h2 class="title">Engineer for intelligent, reliable systems</h2></div>
+  <div class="about-grid">
+    <div class="reveal">
+      <p>I'm a software engineer focused on the <b>machine-learning and AI-systems</b> side of the stack —
+        designing end-to-end ML pipelines, integrating LLMs and agentic workflows into real products, and
+        keeping them <b>reliable in production</b>.</p>
+      <p>At <b>Capital One</b> I build AI-powered incident tooling — multi-agent LLM workflows, REST backends,
+        and CI-integrated validation on AWS — and run chaos-engineering to prove resilience. Earlier, at
+        <b>Tata Consultancy Services</b>, I built deep-learning perception models (U-Net, DeepLab) for
+        autonomous-vehicle ADAS.</p>
+      <p>I like problems where <b>data, models, and infrastructure meet</b>: reproducible pipelines,
+        train/serve parity, schema-validated APIs, and systems that don't fall over under load.</p>
+    </div>
+    <div class="reveal now-card">
+      <h4>// CURRENTLY</h4>
+      <div class="now-row"><span class="k">Role</span><span>Software Engineer @ Capital One</span></div>
+      <div class="now-row"><span class="k">Focus</span><span>LLM / agentic AI, MLOps, backend</span></div>
+      <div class="now-row"><span class="k">Stack</span><span>Python · PyTorch · AWS · FastAPI · Docker</span></div>
+      <div class="now-row"><span class="k">Based in</span><span>New Jersey, USA</span></div>
+      <div class="now-row"><span class="k">Open to</span><span>ML / AI / Backend SWE roles</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="reveal"><div class="label">02 · Skills</div>
+  <h2 class="title">The toolkit</h2></div>
+  <div class="skills-grid">
+    <div class="reveal skill-cat"><h4>🤖 ML &amp; Deep Learning</h4><div class="chips">
+      <span class="chip">PyTorch</span><span class="chip">TensorFlow</span><span class="chip">Scikit-learn</span>
+      <span class="chip">LightGBM</span><span class="chip">CNN</span><span class="chip">U-Net</span>
+      <span class="chip">DeepLab</span><span class="chip">OpenCV</span></div></div>
+    <div class="reveal skill-cat"><h4>🧠 AI &amp; LLM Engineering</h4><div class="chips">
+      <span class="chip">LLM Integration</span><span class="chip">RAG</span><span class="chip">AI Agents</span>
+      <span class="chip">Agentic Workflows</span><span class="chip">Prompt Engineering</span>
+      <span class="chip">Multi-Agent Systems</span></div></div>
+    <div class="reveal skill-cat"><h4>⚙️ MLOps &amp; Deployment</h4><div class="chips">
+      <span class="chip">AWS SageMaker</span><span class="chip">Docker</span><span class="chip">Kubernetes</span>
+      <span class="chip">FastAPI</span><span class="chip">Flask</span><span class="chip">Model Registry</span>
+      <span class="chip">Grafana</span></div></div>
+    <div class="reveal skill-cat"><h4>🗄️ Data Engineering</h4><div class="chips">
+      <span class="chip">Apache Spark</span><span class="chip">PySpark</span><span class="chip">Kafka</span>
+      <span class="chip">Pandas</span><span class="chip">NumPy</span><span class="chip">Feature Eng</span></div></div>
+    <div class="reveal skill-cat"><h4>☁️ Cloud &amp; Reliability</h4><div class="chips">
+      <span class="chip">AWS (EC2/RDS/S3/Lambda)</span><span class="chip">ECS Fargate</span>
+      <span class="chip">Terraform</span><span class="chip">CloudWatch</span><span class="chip">Gremlin</span></div></div>
+    <div class="reveal skill-cat"><h4>💻 Languages &amp; CI/CD</h4><div class="chips">
+      <span class="chip">Python</span><span class="chip">SQL</span><span class="chip">Bash</span><span class="chip">Go</span>
+      <span class="chip">GitHub Actions</span><span class="chip">Jenkins</span><span class="chip">Pytest</span></div></div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="reveal"><div class="label">03 · Experience</div>
+  <h2 class="title">Where I've shipped</h2></div>
+  <div class="timeline">
+    <div class="reveal tl-item">
+      <div class="when">JUL 2024 — PRESENT</div>
+      <h4>Software Engineer</h4>
+      <div class="co">Capital One</div>
+      <ul>
+        <li>Built an AI-powered incident-summarization feature end to end — REST backend, LLM inference, context injection, structured rendering — with iterative prompt tuning.</li>
+        <li>Developed agentic AI workflows orchestrating LLM agents in parallel for incident triage and analysis.</li>
+        <li>Built shared validation tooling and reusable test harnesses for ML pipelines, cutting regression-detection time in production.</li>
+        <li>Implemented automated failover, runbook automation, and chaos-engineering experiments (Gremlin) across AWS for multi-region resilience.</li>
+      </ul>
+    </div>
+    <div class="reveal tl-item">
+      <div class="when">JUL 2021 — AUG 2022</div>
+      <h4>Software Engineer</h4>
+      <div class="co">Tata Consultancy Services</div>
+      <ul>
+        <li>Engineered deep-learning models (U-Net, DeepLab) for autonomous-vehicle perception — lane, boundary, sign and object detection.</li>
+        <li>Designed scalable semantic-segmentation pipelines with TFRecord serialization, generating training-ready datasets at scale.</li>
+        <li>Containerized ML workflows with Docker/Kubernetes; ran hyperparameter tuning and cross-validation to optimize accuracy.</li>
+      </ul>
+    </div>
+    <div class="reveal tl-item">
+      <div class="when">2022 — 2024</div>
+      <h4>M.S. Computer Science</h4>
+      <div class="co">Stevens Institute of Technology — Hoboken, NJ</div>
+      <ul><li>GPA 3.5 / 4.0. Focus on ML systems and software engineering.</li></ul>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="reveal"><div class="label">04 · Projects</div>
+  <h2 class="title">Things I've built</h2></div>
+  <div class="proj-grid" id="projGrid">
+    <a class="proj" href="https://github.com/vk86294140-cloud/promptpress" target="_blank" rel="noopener">
+      <div class="ph"><span class="pico">🗜️</span></div>
+      <h4>PromptPress</h4>
+      <p>Zero-dependency Python library that cuts LLM input-token costs 30–70% via a budget-driven compression pipeline with six strategies on an aggressiveness ladder.</p>
+      <div class="ptags"><span>Python</span><span>Claude API</span><span>PageRank</span><span>CI</span></div>
+      <div class="plink">→ github.com/.../promptpress</div>
+    </a>
+    <a class="proj" href="https://github.com/vk86294140-cloud/credit-risk-mlops" target="_blank" rel="noopener">
+      <div class="ph"><span class="pico">📉</span></div>
+      <h4>Credit-Risk MLOps Pipeline</h4>
+      <p>End-to-end reproducible MLOps pipeline that trains, versions and serves a credit-default model behind a schema-validated FastAPI service, with a CI test matrix.</p>
+      <div class="ptags"><span>Scikit-learn</span><span>FastAPI</span><span>Docker</span><span>GH Actions</span></div>
+      <div class="plink">→ github.com/.../credit-risk-mlops</div>
+    </a>
+    <a class="proj" href="https://github.com/vk86294140-cloud/doc-rag-assistant" target="_blank" rel="noopener">
+      <div class="ph"><span class="pico">📚</span></div>
+      <h4>Document RAG Assistant</h4>
+      <p>Retrieval-augmented generation service answering questions over documents with source-grounded citations — chunking, embeddings, vector store and Claude generation.</p>
+      <div class="ptags"><span>RAG</span><span>FastAPI</span><span>Claude API</span><span>NumPy</span></div>
+      <div class="plink">→ github.com/.../doc-rag-assistant</div>
+    </a>
+    <a class="proj" href="https://github.com/vk86294140-cloud/Chaos-Forge" target="_blank" rel="noopener">
+      <div class="ph"><span class="pico">🔥</span></div>
+      <h4>Chaos-Forge</h4>
+      <p>Lightweight chaos-engineering toolkit that injects controlled faults through a reverse proxy and emits pass/fail resilience reports against steady-state hypotheses.</p>
+      <div class="ptags"><span>Python</span><span>HTTP proxy</span><span>Docker</span><span>Pytest</span></div>
+      <div class="plink">→ github.com/.../Chaos-Forge</div>
+    </a>
+    <a class="proj" href="https://github.com/vk86294140-cloud/cloud-deploy-iac" target="_blank" rel="noopener">
+      <div class="ph"><span class="pico">🏗️</span></div>
+      <h4>Cloud Deploy IaC</h4>
+      <p>Production-style Terraform deploying a containerized FastAPI service to AWS ECS Fargate behind an ALB, with CloudWatch monitoring and keyless OIDC CI/CD.</p>
+      <div class="ptags"><span>Terraform</span><span>AWS ECS</span><span>OIDC</span><span>Docker</span></div>
+      <div class="plink">→ github.com/.../cloud-deploy-iac</div>
+    </a>
+    <a class="proj" href="https://github.com/vk86294140-cloud" target="_blank" rel="noopener">
+      <div class="ph"><span class="pico">🌾</span></div>
+      <h4>Rice Quality Analysis (DL)</h4>
+      <p>Automated rice-kernel quality classifier using a custom CNN with Fuzzy C-Means segmentation, evaluated with precision/recall/F1/ROC-AUC.</p>
+      <div class="ptags"><span>TensorFlow</span><span>OpenCV</span><span>CNN</span><span>SVM</span></div>
+      <div class="plink">→ more on GitHub</div>
+    </a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact">
+  <div class="reveal">
+    <div class="label" style="text-align:center">05 · Contact</div>
+    <h2>Let's build something.</h2>
+    <p>I'm open to ML / AI / Backend engineering roles. The fastest way to reach me is email — I reply quickly.</p>
+    <div class="clinks">
+      <a class="btn primary" href="mailto:vk86294140@gmail.com">vk86294140@gmail.com</a>
+      <a class="btn ghost" href="https://github.com/vk86294140-cloud" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn ghost" href="tel:+15513446817">+1 (551) 344-6817</a>
+    </div>
+  </div>
+</section>
+
+<footer>Designed &amp; built by Vamsi Krishna Unnam · New Jersey, USA</footer>
+
+<script>
+/* nav scroll */
+const nav=document.getElementById('nav');
+addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>40));
+
+/* typing roles */
+const roles=["ML / AI Systems Engineer","LLM & Agentic-AI Builder","MLOps & Backend Engineer","Cloud-Native Problem Solver"];
+let ri=0,ci=0,del=false;const rt=document.getElementById('role-txt');
+(function type(){
+  const w=roles[ri];
+  rt.textContent=del?w.slice(0,ci--):w.slice(0,ci++);
+  if(!del&&ci===w.length+1){del=true;setTimeout(type,1300);return;}
+  if(del&&ci===0){del=false;ri=(ri+1)%roles.length;}
+  setTimeout(type,del?45:80);
+})();
+
+/* reveal on scroll */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')}),{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* count up stats */
+const so=new IntersectionObserver(es=>es.forEach(e=>{
+  if(!e.isIntersecting)return; so.unobserve(e.target);
+  const to=+e.target.dataset.to,suf=e.target.dataset.suffix||'';let n=0;
+  const t=setInterval(()=>{n+=Math.max(1,Math.ceil(to/30));if(n>=to){n=to;clearInterval(t);}
+    e.target.textContent=n+suf;},35);
+},{threshold:.6});
+document.querySelectorAll('.num').forEach(el=>so.observe(el));
+
+/* project glow follows cursor */
+document.querySelectorAll('.proj').forEach(p=>{
+  p.addEventListener('mousemove',e=>{const r=p.getBoundingClientRect();
+    p.style.setProperty('--mx',(e.clientX-r.left)+'px');
+    p.style.setProperty('--my',(e.clientY-r.top)+'px');});
+});
+
+/* resume button: looks for Vamsi_Unnam_Resume.pdf next to this file */
+document.getElementById('resume-btn').href='Vamsi_Unnam_Resume.pdf';
+
+/* particle background */
+const cv=document.getElementById('bg-canvas'),cx=cv.getContext('2d');let W,H,ps;
+function rs(){W=cv.width=innerWidth;H=cv.height=innerHeight;
+  ps=Array.from({length:Math.min(90,Math.floor(W/16))},()=>({
+    x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4,r:Math.random()*1.6+.4}));}
+rs();addEventListener('resize',rs);
+(function draw(){cx.clearRect(0,0,W,H);
+  for(const p of ps){p.x+=p.vx;p.y+=p.vy;
+    if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;
+    cx.beginPath();cx.arc(p.x,p.y,p.r,0,7);cx.fillStyle='rgba(56,225,196,.5)';cx.fill();}
+  for(let i=0;i<ps.length;i++)for(let j=i+1;j<ps.length;j++){
+    const a=ps[i],b=ps[j],d=Math.hypot(a.x-b.x,a.y-b.y);
+    if(d<120){cx.beginPath();cx.moveTo(a.x,a.y);cx.lineTo(b.x,b.y);
+      cx.strokeStyle='rgba(108,140,255,'+(.12*(1-d/120))+')';cx.stroke();}}
+  requestAnimationFrame(draw);})();
+</script>
+</body>
+</html>
